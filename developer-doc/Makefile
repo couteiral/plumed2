@@ -19,6 +19,7 @@ coverage:
 	lcov -c -d ../src/ --output-file coverage.info
 # remove system headers:
 	lcov -r coverage.info "/opt/*" "/usr/*" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	genhtml -o coverage-full -t "plumed test coverage (full)" coverage.info
 # remove internal blas:
 	lcov -r coverage.info "*/blas/*.cpp" "*/blas/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
 # remove internal lapack:
@@ -28,3 +29,12 @@ coverage:
 # remove internal lepton:
 	lcov -r coverage.info "*/lepton/*.cpp" "*/lepton/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
 	genhtml -o coverage -t "plumed test coverage" coverage.info
+# remove optional modules
+	lcov -r coverage.info "*/adjmat/*.cpp" "*/adjmat/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/crystallization/*.cpp" "*/crystallization/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/drr/*.cpp" "*/drr/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/eds/*.cpp" "*/eds/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/manyrestraints/*.cpp" "*/manyrestraints/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/pamm/*.cpp" "*/pamm/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	lcov -r coverage.info "*/ves/*.cpp" "*/ves/*.h" -o coverage-tmp.info && mv coverage-tmp.info coverage.info
+	genhtml -o coverage-default -t "plumed test coverage (default modules)" coverage.info
